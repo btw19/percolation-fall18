@@ -25,6 +25,7 @@ public class PercolationUF implements IPercolate{
 			return;
 		}
 		myGrid[row][col] = true;
+		myOpenCount++;
 		if(row == 0) {
 			myFinder.union(getIndex(row,col), VTOP);
 		}
