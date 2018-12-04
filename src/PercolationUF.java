@@ -21,8 +21,28 @@ public class PercolationUF implements IPercolate{
 			throw new IndexOutOfBoundsException(
 					String.format("(%d,%d) not in bounds", row,col));
 		}
-		
-		
+		if (isOpen(row, col)) {
+			return;
+		}
+		myGrid[row][col] = true;
+		if(row == 0) {
+			myFinder.union(getIndex(row,col), VTOP);
+		}
+		if(row == myGrid.length-1) {
+			myFinder.union(getIndex(row, col), VBOTTOM);
+		}
+		if(inBounds(row-1, col) && isOpen(row-1, col)) {
+			myFinder.union(getIndex(row, col), getIndex(row-1,col));
+		}
+		if(inBounds(row+1, col) && isOpen(row+1, col)) {
+			myFinder.union(getIndex(row, col), getIndex(row+1,col));
+		}
+		if(inBounds(row, col-1) && isOpen(row, col-1)) {
+			myFinder.union(getIndex(row, col), getIndex(row,col-1));
+		}
+		if(inBounds(row, col+1) && isOpen(row, col+1)) {
+			myFinder.union(getIndex(row, col), getIndex(row,col+1));
+		}
 	}
 
 	@Override
