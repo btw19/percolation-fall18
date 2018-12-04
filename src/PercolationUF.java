@@ -1,21 +1,23 @@
 
 public class PercolationUF implements IPercolate{
-	boolean[][] myGrid = new boolean[0][0];
+	private boolean[][] myGrid;
 	private final int VTOP;
 	private final int VBOTTOM;
-	IUnionFind myFinder = new IUnionFind();
-	private int myOpenCount = 0;
+	private IUnionFind myFinder;
+	private int myOpenCount;
 	
 	public PercolationUF (int size, IUnionFind finder) {
 		VTOP = size*size;
 		VBOTTOM = size*size+1;
-		myGrid = myGrid[size][size];
+		myGrid = new boolean [size][size];
+		finder.initialize(size*size+2);
+		myFinder = finder;
 	}
 	
 	
 	@Override
 	public void open(int row, int col) {
-		if (row > VTOP || col > VTOP) {
+		if (! inBounds(row, col)) {
 			throw new IndexOutOfBoundsException(
 					String.format("(%d,%d) not in bounds", row,col));
 		}
@@ -25,39 +27,40 @@ public class PercolationUF implements IPercolate{
 
 	@Override
 	public boolean isOpen(int row, int col) {
-		if (row > VTOP || col > VTOP) {
+		if (! inBounds(row, col)) {
 			throw new IndexOutOfBoundsException(
 					String.format("(%d,%d) not in bounds", row,col));
 		}
-		return false;
+		return myGrid[row][col];
 	}
 
 	@Override
 	public boolean isFull(int row, int col) {
-		if (row > VTOP || col > VTOP) {
+		if (! inBounds(row, col)) {
 			throw new IndexOutOfBoundsException(
 					String.format("(%d,%d) not in bounds", row,col));
 		}
-		
-		return false;
+		return myFinder.connected(getIndex(row, col), VTOP);
 	}
 
 	@Override
 	public boolean percolates() {
-		if (VTOP VBOTTOM) {
-			return true;
-		}
-		return false;
+		return myFinder.connected(VBOTTOM, VTOP);
 	}
 
 	@Override
 	public int numberOfOpenSites() {
-		// TODO Auto-generated method stub
 		return myOpenCount;
 	}
 	
-	public int getIndex(int row, int col, int n) {
-		return row*n + col;
+	public int getIndex(int row, int col) {
+		return row*myGrid.length + col;
+	}
+	
+	private boolean inBounds(int row, int col) {
+		if (row < 0 || row >= myGrid.length) return false;
+		if (col < 0 || col >= myGrid[0].length) return false;
+		return true;
 	}
 
 }
