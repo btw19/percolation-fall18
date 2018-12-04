@@ -17,20 +17,20 @@ public class PercolationBFS extends PercolationDFSFast{
 		qi.add(row*size + col);
 		while (qi.size() > 0) {
 			int value = qi.remove();
-            if (inBounds(row-1, col) && isOpen(row-1, col) && ! isFull(row-1, col)) {
-                	qi.add((row-1)*size + col);
+            if (inBounds(value/size-1, value%size) && isOpen(value/size-1, value%size) && ! isFull(value/size-1, value%size)) {
+                	qi.add((value/size-1)*size + value%size);
                 	myGrid[value/size-1][value%size] = FULL;
                 }
-            if (inBounds(row+1, col) && isOpen(row+1, col) && ! isFull(row+1, col)) {
-                	qi.add((row+1)*size + col);
+            if (inBounds(value/size+1, value%size) && isOpen(value/size+1, value%size) && ! isFull(value/size+1, value%size)) {
+                	qi.add((value/size+1)*size + value%size);
                 	myGrid[value/size+1][value%size] = FULL;
                 }
-            if (inBounds(row, col-1) && isOpen(row, col-1) && ! isFull(row, col-1)) {
-                	qi.add(row*size + col-1);
+            if (inBounds(value/size, value%size-1) && isOpen(value/size, value%size-1) && ! isFull(value/size, value%size-1)) {
+                	qi.add(value/size*size + value%size-1);
                 	myGrid[value/size][value%size-1] = FULL;
                 }
-            if (inBounds(row, col+1) && isOpen(row, col+1) && ! isFull(row, col+1)) {
-                	qi.add(row*size + col+1);
+            if (inBounds(value/size, value%size+1) && isOpen(value/size, value%size+1) && ! isFull(value/size, value%size+1)) {
+                	qi.add(value/size*size + value%size+1);
                 	myGrid[value/size][value%size+1] = FULL;
                 }
 		}
