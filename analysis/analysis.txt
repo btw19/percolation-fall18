@@ -1,0 +1,55 @@
+Ben Williams
+btw19
+
+Copy/Paste results from PercolationStats using PercolationDFSFast
+
+simulation data for 20 trials
+grid	mean	stddev	time
+100	   0.593	0.014	0.104
+200	   0.591	0.010	0.113
+400	   0.590	0.006	0.606
+800	   0.594	0.004	3.846
+
+
+Copy/Paste results from PercolationStats using PercolationBFS
+
+simulation data for 20 trials
+grid	mean	stddev	time
+100	    0.593	0.014	0.154
+200	    0.591	0.010	0.175
+400	    0.590	0.006	0.701
+800	    0.594	0.004	4.052
+1600	0.592	0.002	23.698
+3200	0.593	0.001	152.504
+
+Copy/Paste results from PercolationStats using PercolationUF 
+with the QuickUWPC UnionFind implementation.
+
+simulation data for 20 trials
+grid	mean	stddev	time
+100	    0.593	0.014	0.062
+200	    0.591	0.010	0.121
+400	    0.590	0.006	0.533
+800	    0.594	0.004	3.076
+1600	0.592	0.002	16.805
+3200	0.593	0.001	91.438
+
+1. How does doubling the grid size affect running time (keeping # trials fixed)
+
+Doubling the grid size increases run time by approximately a factor of 5.6.
+
+2. How does doubling the number of trials affect running time.
+
+Doubling the number of trials increases the run time by a factor of approximately 2. So a 1 to 1 for trial increases.
+
+3. Estimate the largest grid size you can run in 24 hours with 20 trials. Explain your reasoning.
+
+The largest grid size possible in a 24 hour period with 20 trials will have to come from
+an estimate based in the current data. Using our estimated factor of 5.6 for each doubling,
+we can expect that trend to generally continue up to the 24 hour mark. There are 60 seconds
+in a minute, 60 minutes in an hour and 24 hours in a 24 hour period. 60 * 60 * 24 is 86400.
+Knowing 86400 is our ceiling, we'll simply double/multiply by 5.6 until we hit it. 6400 is
+512.06, 12800 is 2867.56, 25600 is 16058.33, 51200 is 89926. So simply following our doubling
+rule, we'll barely exceed 24 hours at 51200. Imagining this as an exponential graph, going back
+3500 seconds will keep us much closer to 51200 than 25600, so my best estimate for the largest
+possible grid size in 24 hours is about 49000.
